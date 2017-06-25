@@ -1,1 +1,5 @@
 django-mysql
+djangorestframework
+django-cors-headers
+mysqlclient
+schedule

@@ -24,7 +24,7 @@ SECRET_KEY = '!x6&iw^bl)+elunj8h4j77jz=9tcge8bh0-dk+jf7w*8hrm9js'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['223.197.177.165']
 
 # Application definition
 
@@ -134,9 +134,10 @@ STATIC_URL = '/static/'
 
 CORS_ORIGIN_WHITELIST = (
     'google.com',
-    'hostname.example.com',
+    'jiaheliu.me',
     'localhost:8010',
-    '127.0.0.1:9000'
+    '127.0.0.1:9000',
+    '119.32.218.93'
 )
 
 CACHES = {

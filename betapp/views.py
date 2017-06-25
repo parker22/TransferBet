@@ -70,12 +70,12 @@ def rumors_detail(request):
         serializer = ClubRumorsSerializer(betodd)
         rumors_json = json.dumps(betodd.club_rumors)
         betodd.club_rumors = translate_json(rumors_json)
+
         return JsonResponse(serializer.data)
 
 
 def job():
     text = requests.get(url).text
-    print text
     selector = Selector(text=text)
     print len((selector.css('div.mktgrp > * >table')))
     print len((selector.css('div.mktgrp > * >h3')))
@@ -88,7 +88,7 @@ def job():
         except Player.DoesNotExist:
             cn_name = translate(str(player.css('::text')[0].extract().encode('utf-8').strip()))
             player = Player(en_name=en_name, cn_name=cn_name)
-            print 'new player' + str(en_name)
+            print 'new player' + cn_name
             player.save()
         print index
         clubs = selector.css('div.mktgrp > *>table')[index].css('td>a>span::text').extract()
@@ -98,7 +98,7 @@ def job():
                 c = Club.objects.get(en_club_name=club_en_name)
             except Club.DoesNotExist:
                 club_cn_name = translate(club_en_name)
-                print 'new club' + str(club_en_name)
+                print 'new club' + club_en_name
                 c = Club(en_club_name=club_en_name, cn_club_name=club_cn_name)
                 c.save()
 
