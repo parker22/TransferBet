@@ -29,6 +29,14 @@ fromLang = 'en'
 toLang = 'zh'
 salt = random.randint(32768, 65536)
 
+club_name_dict={
+    'To Stay at Manchester City':'To Stay at Man City',
+    'To Stay at Manchester Utd':'To Stay at Man Utd',
+'To Stay at Manchester United':'To Stay at Man Utd',
+    'Manchester United':'Man Utd',
+'Manchester Utd':'Man Utd',
+'Manchester City':'Man City'
+}
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -52,7 +60,7 @@ def odds_detail(request):
     if request.method == 'GET':
         serializer = BetOddsSerializer(betodd)
         odds_json = json.dumps(betodd.odds)
-        betodd.odds = translate_json(odds_json)
+        betodd.odds = odds_json
         return JsonResponse(serializer.data)
 
 
@@ -69,7 +77,7 @@ def rumors_detail(request):
     if request.method == 'GET':
         serializer = ClubRumorsSerializer(betodd)
         rumors_json = json.dumps(betodd.club_rumors)
-        betodd.club_rumors = translate_json(rumors_json)
+        betodd.club_rumors = rumors_json
 
         return JsonResponse(serializer.data)
 
@@ -83,33 +91,43 @@ def job():
     club_odds = []
     for index, player in enumerate(selector.css('div.mktgrp > * >h3')):
         en_name = player.css('::text')[0].extract().encode('utf-8').strip()
+        cn_name = ''
+
         try:
             player = Player.objects.get(en_name=en_name)
+            cn_name = player.cn_name
         except Player.DoesNotExist:
             cn_name = translate(str(player.css('::text')[0].extract().encode('utf-8').strip()))
             player = Player(en_name=en_name, cn_name=cn_name)
-            print 'new player' + cn_name
+            print 'new player' + en_name
             player.save()
         print index
         clubs = selector.css('div.mktgrp > *>table')[index].css('td>a>span::text').extract()
+        clubs = [str(club).replace("(Does not include returning on loan following a permanent deal elsewhere)","").encode('utf-8').strip() for club in clubs]
+        clubs_cn = []
         for club in clubs:
-            club_en_name = club.encode('utf-8').strip()
+            if club in club_name_dict:
+                club = club_name_dict[club]
+            club_en_name = club
+            club_cn_name = ''
             try:
                 c = Club.objects.get(en_club_name=club_en_name)
+                club_cn_name = c.cn_club_name
             except Club.DoesNotExist:
                 club_cn_name = translate(club_en_name)
                 print 'new club' + club_en_name
                 c = Club(en_club_name=club_en_name, cn_club_name=club_cn_name)
                 c.save()
+            clubs_cn.append(club_cn_name)
 
         odds = selector.css('div.mktgrp > *>table')[index].css('td>a>b::text').extract()
         # print dict(zip(clubs, odds))
         # for player in selector.css('div.mktgrp >*>h3::text').extract():
         # 	print player.strip()
-        player_odds = {'player': en_name, 'odds': [dict(zip(['club', 'odd'], row)) for row in zip(clubs, odds)]}
+        player_odds = {'player': cn_name, 'odds': [dict(zip(['club', 'odd'], row)) for row in zip(clubs_cn, odds)]}
         player_odds_list.append(player_odds)
         items = [dict(zip(['club', 'odd', 'player'], row)) for row in
-                 zip(clubs, odds, [en_name] * len(clubs))]
+                 zip(clubs_cn, odds, [cn_name] * len(clubs_cn))]
         club_odds += items
     keyfunc = operator.itemgetter("club")
     club_rumors_list = [{'club': key, 'rumors': list(grp)} for key, grp in groupby(sorted(club_odds, key=keyfunc),
@@ -145,8 +163,10 @@ def translate_json(json):
 
     d = d_c.copy()
     d.update(d_p)
-    s = str(json)
+    s = json
 
+    # for key, value in org.items():
+    #     text = text.replace(key, value)
     pattern = re.compile(r'\b(' + '|'.join(d.keys()) + r')\b')
-    result = pattern.sub(lambda x: d[x.group()], s)
+    result = pattern.sub(lambda x: d[x.group()].encode('utf-8'), s.encode('utf-8'))
     return result

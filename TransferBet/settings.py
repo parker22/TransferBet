@@ -134,7 +134,7 @@ STATIC_URL = '/static/'
 
 CORS_ORIGIN_WHITELIST = (
     'google.com',
-    'jiaheliu.me',
+    'transferbet.jiaheliu.me',
     'localhost:8010',
     '127.0.0.1:9000',
     '119.32.218.93'
