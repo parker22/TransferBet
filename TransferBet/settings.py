@@ -24,7 +24,7 @@ SECRET_KEY = '!x6&iw^bl)+elunj8h4j77jz=9tcge8bh0-dk+jf7w*8hrm9js'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['223.197.177.165']
+ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -81,9 +81,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'betapp',
-        'USER': 'fsa',
-        'PASSWORD': 'fsafsa',
-        'HOST': '223.197.177.165',
+        'USER': 'parker',
+        'PASSWORD': 'EeeWWW2017@GZ',
+        'HOST': '13.124.60.205',
         'PORT': '3306',
         'OPTIONS': {
             # Tell MySQLdb to connect with 'utf8mb4' character set
@@ -135,7 +135,7 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_WHITELIST = (
     'google.com',
     'transferbet.jiaheliu.me',
-    'localhost:8010',
+    'localhost',
     '127.0.0.1:9000',
     '119.32.218.93'
 )
