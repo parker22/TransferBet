@@ -1,3 +1,4 @@
+# encoding: utf-8
 import operator
 from itertools import groupby
 
@@ -35,7 +36,8 @@ club_name_dict={
 'To Stay at Manchester United':'To Stay at Man Utd',
     'Manchester United':'Man Utd',
 'Manchester Utd':'Man Utd',
-'Manchester City':'Man City'
+'Manchester City':'Man City',
+    'Borussia Dortmund':'Dortmund'
 }
 
 def index(request):
@@ -47,7 +49,7 @@ def updateOdds(request):
     return HttpResponse("Odds Updated")
 
 
-@cache_page(60 * 15)
+@cache_page(60 * 10)
 def odds_detail(request):
     """
     Retrieve, update or delete a code snippet.
@@ -64,7 +66,7 @@ def odds_detail(request):
         return JsonResponse(serializer.data)
 
 
-@cache_page(60 * 15)
+@cache_page(60 * 10)
 def rumors_detail(request):
     """
     Retrieve, update or delete a code snippet.
@@ -80,6 +82,17 @@ def rumors_detail(request):
         betodd.club_rumors = rumors_json
 
         return JsonResponse(serializer.data)
+
+def player_detail(request):
+    player_name = u'拉卡泽特'
+    odds_list =  BetOdds.objects.filter(odds__0__player=player_name).values_list()
+    player_clubs_list = []
+    if request.method == 'GET':
+        for odds in odds_list:
+            t_created = odds[1]
+            odd = next((item['odds'] for item in odds[2] if item['player'] == player_name), None)
+            player_clubs_list.append({'t_created': t_created, 'odd': odd})
+        return JsonResponse({'player_clubs_list':player_clubs_list})
 
 
 def job():
@@ -101,7 +114,6 @@ def job():
             player = Player(en_name=en_name, cn_name=cn_name)
             print 'new player' + en_name
             player.save()
-        print index
         clubs = selector.css('div.mktgrp > *>table')[index].css('td>a>span::text').extract()
         clubs = [str(club).replace("(Does not include returning on loan following a permanent deal elsewhere)","").encode('utf-8').strip() for club in clubs]
         clubs_cn = []
