@@ -23,7 +23,7 @@ from django.views.decorators.cache import cache_page
 
 appid = '20170620000059559'
 secretKey = 'VGfJwjHNDqF5BleTKMAK'
-url = 'https://www.skybet.com/football/specials/transfer-specials'
+url = 'http://128.199.77.172:5000/'
 httpClient = None
 trans_api = '/api/trans/vip/translate'
 fromLang = 'en'
@@ -97,6 +97,7 @@ def player_detail(request):
 
 def job():
     text = requests.get(url).text
+    print text
     selector = Selector(text=text)
     print len((selector.css('div.mktgrp > * >table')))
     print len((selector.css('div.mktgrp > * >h3')))
