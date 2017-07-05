@@ -24,7 +24,7 @@ SECRET_KEY = '!x6&iw^bl)+elunj8h4j77jz=9tcge8bh0-dk+jf7w*8hrm9js'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost','13.124.60.205']
 
 # Application definition
 
@@ -45,7 +45,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -136,9 +135,6 @@ CORS_ORIGIN_WHITELIST = (
     'google.com',
     'transferbet.club',
     'transferbet.jiaheliu.me',
-    'localhost',
-    '127.0.0.1:9000',
-    '119.32.218.93'
 )
 
 CACHES = {
