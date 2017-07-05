@@ -53,7 +53,8 @@ def job():
                      ('path', '/football/specials/transfer-specials'),
                      ('scheme', 'https'),
                      (
-                     'accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'),
+                         'accept',
+                         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'),
                      ('accept-encoding', 'gzip, deflate, br'),
                      ('accept-language', 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2'),
                      ('cache-control', 'max-age=0'),

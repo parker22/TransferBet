@@ -1,10 +1,13 @@
-import schedule
 import time
 import urllib2
 
+import schedule
+
+
 def job():
-	response = urllib2.urlopen('http://localhost:8088/updateOdds/')
-	html = response.read()
+    response = urllib2.urlopen('http://localhost:8088/updateOdds/')
+    html = response.read()
+
 
 schedule.every(10).minutes.do(job)
 

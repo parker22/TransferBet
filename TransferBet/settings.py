@@ -24,7 +24,7 @@ SECRET_KEY = '!x6&iw^bl)+elunj8h4j77jz=9tcge8bh0-dk+jf7w*8hrm9js'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','13.124.60.205']
+ALLOWED_HOSTS = ['localhost', '13.124.60.205','jiaheliu.me']
 
 # Application definition
 
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_mysql',
     'rest_framework',
-'corsheaders',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [

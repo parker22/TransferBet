@@ -8,6 +8,7 @@ class BetOddsSerializer(serializers.ModelSerializer):
         model = BetOdds
         fields = ('t_created', 'odds')
 
+
 class ClubRumorsSerializer(serializers.ModelSerializer):
     class Meta:
         model = BetOdds

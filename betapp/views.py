@@ -1,25 +1,21 @@
 # encoding: utf-8
+import httplib
+import json
+import md5
 import operator
+import random
+import re
+import urllib
 from itertools import groupby
 
-from django.shortcuts import render
-
+import requests
 # Create your views here.
 from django.http import HttpResponse, JsonResponse
-import requests
+from django.views.decorators.cache import cache_page
 from parsel import Selector
-import httplib
-import md5
-import urllib
-import random
-import json
-import schedule
-import time
-import re
 
 from betapp.models import Player, Club, BetOdds
 from betapp.serializers import BetOddsSerializer, ClubRumorsSerializer
-from django.views.decorators.cache import cache_page
 
 appid = '20170620000059559'
 secretKey = 'VGfJwjHNDqF5BleTKMAK'
@@ -37,7 +33,7 @@ club_name_dict = {
     'Manchester United': 'Man Utd',
     'Manchester Utd': 'Man Utd',
     'Manchester City': 'Man City',
-    'Borussia Dortmund': 'Dortmund'
+    'Borussia Dortmund': 'Dortmund',
 }
 
 
