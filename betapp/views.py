@@ -37,7 +37,8 @@ club_name_dict={
     'Manchester United':'Man Utd',
 'Manchester Utd':'Man Utd',
 'Manchester City':'Man City',
-    'Borussia Dortmund':'Dortmund'
+    'Borussia Dortmund':'Dortmund',
+'C Palace':'Crystal Palace'
 }
 
 def index(request):
