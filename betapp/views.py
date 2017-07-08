@@ -26,17 +26,7 @@ fromLang = 'en'
 toLang = 'zh'
 salt = random.randint(32768, 65536)
 
-<<<<<<< HEAD
-club_name_dict={
-    'To Stay at Manchester City':'To Stay at Man City',
-    'To Stay at Manchester Utd':'To Stay at Man Utd',
-'To Stay at Manchester United':'To Stay at Man Utd',
-    'Manchester United':'Man Utd',
-'Manchester Utd':'Man Utd',
-'Manchester City':'Man City',
-    'Borussia Dortmund':'Dortmund',
-'C Palace':'Crystal Palace'
-=======
+
 club_name_dict = {
     'To Stay at Manchester City': 'To Stay at Man City',
     'To Stay at Manchester Utd': 'To Stay at Man Utd',
@@ -46,7 +36,6 @@ club_name_dict = {
     'Manchester City': 'Man City',
     'Borussia Dortmund': 'Dortmund',
     'C Palace': 'Crystal Palace',
->>>>>>> cc52fb99d726e46391656ecee1b372df3a077472
 }
 
 
