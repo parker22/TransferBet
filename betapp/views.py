@@ -1,25 +1,21 @@
 # encoding: utf-8
+import httplib
+import json
+import md5
 import operator
+import random
+import re
+import urllib
 from itertools import groupby
 
-from django.shortcuts import render
-
+import requests
 # Create your views here.
 from django.http import HttpResponse, JsonResponse
-import requests
+from django.views.decorators.cache import cache_page
 from parsel import Selector
-import httplib
-import md5
-import urllib
-import random
-import json
-import schedule
-import time
-import re
 
 from betapp.models import Player, Club, BetOdds
 from betapp.serializers import BetOddsSerializer, ClubRumorsSerializer
-from django.views.decorators.cache import cache_page
 
 appid = '20170620000059559'
 secretKey = 'VGfJwjHNDqF5BleTKMAK'
@@ -30,6 +26,7 @@ fromLang = 'en'
 toLang = 'zh'
 salt = random.randint(32768, 65536)
 
+<<<<<<< HEAD
 club_name_dict={
     'To Stay at Manchester City':'To Stay at Man City',
     'To Stay at Manchester Utd':'To Stay at Man Utd',
@@ -39,7 +36,19 @@ club_name_dict={
 'Manchester City':'Man City',
     'Borussia Dortmund':'Dortmund',
 'C Palace':'Crystal Palace'
+=======
+club_name_dict = {
+    'To Stay at Manchester City': 'To Stay at Man City',
+    'To Stay at Manchester Utd': 'To Stay at Man Utd',
+    'To Stay at Manchester United': 'To Stay at Man Utd',
+    'Manchester United': 'Man Utd',
+    'Manchester Utd': 'Man Utd',
+    'Manchester City': 'Man City',
+    'Borussia Dortmund': 'Dortmund',
+    'C Palace': 'Crystal Palace',
+>>>>>>> cc52fb99d726e46391656ecee1b372df3a077472
 }
+
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -84,16 +93,17 @@ def rumors_detail(request):
 
         return JsonResponse(serializer.data)
 
+
 def player_detail(request):
     player_name = u'拉卡泽特'
-    odds_list =  BetOdds.objects.filter(odds__0__player=player_name).values_list()
+    odds_list = BetOdds.objects.filter(odds__0__player=player_name).values_list()
     player_clubs_list = []
     if request.method == 'GET':
         for odds in odds_list:
             t_created = odds[1]
             odd = next((item['odds'] for item in odds[2] if item['player'] == player_name), None)
             player_clubs_list.append({'t_created': t_created, 'odd': odd})
-        return JsonResponse({'player_clubs_list':player_clubs_list})
+        return JsonResponse({'player_clubs_list': player_clubs_list})
 
 
 def job():
@@ -117,7 +127,9 @@ def job():
             print 'new player' + en_name
             player.save()
         clubs = selector.css('div.mktgrp > *>table')[index].css('td>a>span::text').extract()
-        clubs = [str(club).replace("(Does not include returning on loan following a permanent deal elsewhere)","").encode('utf-8').strip() for club in clubs]
+        clubs = [
+            str(club).replace("(Does not include returning on loan following a permanent deal elsewhere)", "").encode(
+                'utf-8').strip() for club in clubs]
         clubs_cn = []
         for club in clubs:
             if club in club_name_dict:
@@ -184,3 +196,6 @@ def translate_json(json):
     pattern = re.compile(r'\b(' + '|'.join(d.keys()) + r')\b')
     result = pattern.sub(lambda x: d[x.group()].encode('utf-8'), s.encode('utf-8'))
     return result
+
+
+job()

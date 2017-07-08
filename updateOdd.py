@@ -1,10 +1,19 @@
-import schedule
 import time
 import urllib2
 
+import schedule
+
+
 def job():
-	response = urllib2.urlopen('http://localhost:8088/updateOdds/')
-	html = response.read()
+	while True:
+		try:
+			response = urllib2.urlopen('http://localhost:8088/updateOdds/')
+			html = response.read()
+			break
+		except Exception as e:
+			print 'retry'
+    
+
 
 schedule.every(10).minutes.do(job)
 
